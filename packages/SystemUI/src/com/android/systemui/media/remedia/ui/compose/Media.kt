@@ -69,6 +69,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.blur
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -967,7 +968,7 @@ private fun CardBackground(
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier =
-                    Modifier.fillMaxSize().drawWithContent {
+                    Modifier.fillMaxSize().blur(28.dp).drawWithContent {
                         // Draw the content (loaded art).
                         drawContent()
 
@@ -976,7 +977,7 @@ private fun CardBackground(
                             drawRect(
                                 brush =
                                     Brush.radialGradient(
-                                        0f to gradientBaseColor.copy(alpha = 0.65f),
+                                        0f to gradientBaseColor.copy(alpha = 0.75f),
                                         1f to gradientBaseColor.copy(alpha = 0.75f),
                                         center = size.center,
                                         radius = max(size.width, size.height) / 2,
@@ -1220,9 +1221,9 @@ private fun SeekBarThumb(
 
     Spacer(
         modifier
-            .size(width = 4.dp, height = 16.dp)
+            .size(width = 14.dp, height = 14.dp)
             .hoverable(interactionSource = interactionSource)
-            .background(color = colors.thumbColor, shape = RoundedCornerShape(16.dp))
+            .background(color = colors.thumbColor, shape = RoundedCornerShape(50))
     )
 }
 
@@ -1360,7 +1361,7 @@ private fun SeekBarTrack(
             ) {
                 drawPath(
                     path = path,
-                    color = colors.activeTrackColor,
+                    brush = Brush.horizontalGradient(colors = listOf(Color(0xFF4C8DFF), Color(0xFF9B5CFF), Color(0xFFFF4D6D)), startX = offsetPx, endX = maxOf(thumbPositionPx + offsetPx, offsetPx + 1f)),
                     style = Stroke(width = 2.dp.toPx(), cap = StrokeCap.Round),
                 )
             }
@@ -1624,8 +1625,8 @@ private fun ContentScope.PlayPauseAction(
                 }
             },
             enabled = viewModel.onClick != null,
-            colors = ButtonDefaults.buttonColors(containerColor = buttonColor),
-            shape = RoundedCornerShape(cornerRadius),
+            colors = ButtonDefaults.buttonColors(containerColor = Color.White.copy(alpha = 0.22f)),
+            shape = RoundedCornerShape(50),
             modifier = Modifier.size(buttonSize).scale(scaleAnimatable.value),
         ) {
             when (viewModel.state) {
@@ -1648,7 +1649,7 @@ private fun ContentScope.PlayPauseAction(
                         Icon(
                             painter = painter,
                             contentDescription = viewModel.icon?.contentDescription?.load(),
-                            tint = iconColor,
+                            tint = Color.White,
                             modifier = Modifier.size(24.dp).sysuiResTag(MediaRes.PLAY_PAUSE_BTN),
                         )
                     }
