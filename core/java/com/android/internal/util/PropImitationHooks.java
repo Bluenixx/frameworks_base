@@ -250,11 +250,7 @@ public class PropImitationHooks {
          * Set custom model for Netflix
          */
         if (sIsGms || sIsFinsky) {
-            if (!android.os.Process.isIsolated()) {
-                setPlayIntegrityProps(context);
-            } else {
-                dlog("Not setting Play Integrity props in isolated process");
-            }
+            setPlayIntegrityProps(context);
         } else if (!sStockFp.isEmpty() && packageName.equals(PACKAGE_ARCORE)) {
             dlog("Setting stock fingerprint for: " + packageName);
             setPropValue("FINGERPRINT", sStockFp);
@@ -319,11 +315,6 @@ public class PropImitationHooks {
     }
 
     private static void setPlayIntegrityProps(Context context) {
-        // Guard: isolated processes cannot access content providers (Settings.*).
-        if (android.os.Process.isIsolated()) {
-            dlog("Skipping setPlayIntegrityProps in isolated process");
-            return;
-        }
         String savedProps = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.PIF_DATA);
         if (savedProps == null || TextUtils.isEmpty(savedProps)) {
             savedProps = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.FETCHED_PIF);
