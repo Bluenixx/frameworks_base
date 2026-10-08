@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2024 Paranoid Android
+ * Copyright (C) 2022 Paranoid Android
  *           (C) 2023 ArrowOS
  *           (C) 2023 The LibreMobileOS Foundation
  *
@@ -419,12 +419,6 @@ public class PropImitationHooks {
     }
 
     public static void onEngineGetCertificateChain() {
-        // If a keybox is found, don't block key attestation
-        if (KeyProviderManager.isKeyboxAvailable()) {
-            dlog("Key attestation blocking is disabled because a keybox is defined to spoof");
-            return;
-        }
-
         // Check stack for SafetyNet or Play Integrity
         if (isCallerSafetyNet() || sIsFinsky) {
             dlog("Blocked key attestation sIsGms=" + sIsGms + " sIsFinsky=" + sIsFinsky);
