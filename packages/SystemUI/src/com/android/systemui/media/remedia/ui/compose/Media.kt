@@ -802,27 +802,71 @@ private fun ContentScope.CardForegroundContent(
 
             // Third row.
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 12.dp),
                 ) {
-                    val areActionsVisible =
-                        viewModel.actionButtonLayout == MediaCardActionButtonLayout.WithPlayPause
                     Navigation(
                         viewModel = viewModel.navigation,
                         isSeekBarVisible = true,
-                        isLeftActionVisible = areActionsVisible,
-                        isRightActionVisible = areActionsVisible,
-                        modifier = Modifier.weight(1f),
+                        isLeftActionVisible = false,
+                        isRightActionVisible = false,
+                        modifier = Modifier.fillMaxWidth(),
                     )
 
-                    viewModel.additionalActions.fastForEachIndexed { index, action ->
-                        SecondaryAction(
-                            viewModel = action,
-                            resId = "action$index",
-                            element = Media.Elements.additionalActionButton(index),
-                        )
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(24.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(top = 4.dp),
+                    ) {
+                        val areActionsVisible =
+                            viewModel.actionButtonLayout ==
+                                MediaCardActionButtonLayout.WithPlayPause
+
+                        if (areActionsVisible) {
+                            SecondaryAction(
+                                viewModel = viewModel.navigation.left,
+                                modifier = Modifier.weight(1f),
+                                element = Media.Elements.PrevButton,
+                            )
+                        } else {
+                            Spacer(Modifier.weight(1f))
+                        }
+
+                        AnimatedVisibility(visible = viewModel.playPauseAction != null) {
+                            PlayPauseAction(
+                                viewModel = viewModel.playPauseAction,
+                                buttonColor = colorScheme.primary,
+                                iconColor = colorScheme.onPrimary,
+                                buttonCornerRadius = { isPlaying ->
+                                    if (isPlaying) 16.dp else 48.dp
+                                },
+                            )
+                        }
+
+                        if (areActionsVisible) {
+                            SecondaryAction(
+                                viewModel = viewModel.navigation.right,
+                                modifier = Modifier.weight(1f),
+                                element = Media.Elements.NextButton,
+                            )
+                        } else {
+                            Spacer(Modifier.weight(1f))
+                        }
+
+                        viewModel.additionalActions.fastForEachIndexed { index, action ->
+                            SecondaryAction(
+                                viewModel = action,
+                                resId = "action$index",
+                                element = Media.Elements.additionalActionButton(index),
+                            )
+                        }
                     }
                 }
             }
@@ -968,7 +1012,10 @@ private fun CardBackground(
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier =
-                    Modifier.fillMaxSize().blur(28.dp).drawWithContent {
+                    Modifier
+                        .fillMaxSize()
+                        .blur(40.dp)
+                        .drawWithContent {
                         // Draw the content (loaded art).
                         drawContent()
 
@@ -977,8 +1024,8 @@ private fun CardBackground(
                             drawRect(
                                 brush =
                                     Brush.radialGradient(
-                                        0f to gradientBaseColor.copy(alpha = 0.75f),
-                                        1f to gradientBaseColor.copy(alpha = 0.75f),
+                                        0f to gradientBaseColor.copy(alpha = 0.68f),
+                                        1f to gradientBaseColor.copy(alpha = 0.82f),
                                         center = size.center,
                                         radius = max(size.width, size.height) / 2,
                                     )
