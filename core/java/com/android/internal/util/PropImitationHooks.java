@@ -408,24 +408,19 @@ public class PropImitationHooks {
     }
 
     public static boolean shouldBypassTaskPermission(Context context) {
-        // GMS/Finsky don't have MANAGE_ACTIVITY_TASKS permission
+        // GMS doesn't have MANAGE_ACTIVITY_TASKS permission
         final int callingUid = Binder.getCallingUid();
+        final int gmsUid;
 
         try {
-            int gmsUid = context.getPackageManager()
-                    .getApplicationInfo(PACKAGE_GMS, 0).uid;
-            int finskyUid = context.getPackageManager()
-                    .getApplicationInfo(PACKAGE_FINSKY, 0).uid;
-
-            dlog("shouldBypassTaskPermission: gmsUid:" + gmsUid +
-                    " finskyUid:" + finskyUid +
-                    " callingUid:" + callingUid);
-
-            return (callingUid == gmsUid || callingUid == finskyUid);
+            gmsUid = context.getPackageManager().getApplicationInfo(PACKAGE_GMS, 0).uid;
+            dlog("shouldBypassTaskPermission: gmsUid:" + gmsUid + " callingUid:" + callingUid);
         } catch (Exception e) {
-            Log.e(TAG, "shouldBypassTaskPermission: unable to get gms/finsky uid", e);
+            Log.e(TAG, "shouldBypassTaskPermission: unable to get gms uid", e);
             return false;
         }
+
+        return gmsUid == callingUid;
     }
 
     private static boolean isCallerSafetyNet() {
