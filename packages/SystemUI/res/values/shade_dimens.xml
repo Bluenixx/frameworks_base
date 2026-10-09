@@ -29,14 +29,14 @@
 
     <!-- QS shade overlay common tiles -->
     <dimen name="common_tile_default_active_icon_corner_radius">16dp</dimen>
-    <dimen name="common_tile_default_active_tile_corner_radius">24dp</dimen>
+    <dimen name="common_tile_default_active_tile_corner_radius">28dp</dimen>
     <dimen name="common_tile_default_dual_target_end_padding">8dp</dimen>
     <dimen name="common_tile_default_icon_size">32dp</dimen>
     <dimen name="common_tile_default_inactive_icon_corner_radius">50dp</dimen>
     <dimen name="common_tile_default_inactive_tile_corner_radius">@dimen/common_tile_default_inactive_icon_corner_radius</dimen>
     <dimen name="common_tile_default_large_tile_icon_size">28dp</dimen>
     <dimen name="common_tile_default_start_padding">8dp</dimen>
-    <dimen name="common_tile_default_tile_height">72dp</dimen>
+    <dimen name="common_tile_default_tile_height">80dp</dimen>
     <dimen name="common_tile_default_toggle_target_size">56dp</dimen>
 
     <!-- QS shade overlay brightness bar -->
