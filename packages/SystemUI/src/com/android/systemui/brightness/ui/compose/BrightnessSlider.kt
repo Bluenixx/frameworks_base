@@ -16,6 +16,8 @@
 
 package com.android.systemui.brightness.ui.compose
 
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.animation.core.animateDpAsState
 import android.content.ContentResolver
 import android.content.Context
 import android.database.ContentObserver
