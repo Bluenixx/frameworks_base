@@ -36,6 +36,8 @@ import androidx.lifecycle.compose.LifecycleStartEffect
 import com.android.compose.animation.scene.ContentScope
 import com.android.compose.gesture.gesturesDisabled
 import com.android.compose.modifiers.thenIf
+import com.android.systemui.bluenixx.qs.BluenixxVolumeSlider
+import com.android.systemui.bluenixx.qs.bluenixxMediaStyle
 import com.android.systemui.brightness.ui.compose.BrightnessSliderContainer
 import com.android.systemui.brightness.ui.compose.ContainerColors
 import com.android.systemui.compose.modifiers.sysuiResTag
@@ -109,7 +111,7 @@ fun ContentScope.QuickSettingsContent(
                     Element(key = Media.Elements.MediaCarousel, modifier = Modifier) {
                         Media(
                             viewModelFactory = viewModel.mediaViewModelFactory,
-                            presentationStyle = MediaPresentationStyle.Default,
+                            presentationStyle = bluenixxMediaStyle(),
                             behavior = QuickSettingsContainerViewModel.mediaUiBehavior,
                             onDismissed = viewModel::onMediaSwipeToDismiss,
                             mediaSquishiness = mediaSquishiness,
@@ -146,6 +148,7 @@ private fun QuickSettingsPanelLayout(
             modifier = modifier,
         ) {
             brightness()
+            BluenixxVolumeSlider()
             Row(
                 horizontalArrangement = spacedBy(QuickSettingsShade.Dimensions.HorizontalPadding),
                 verticalAlignment = Alignment.CenterVertically,
@@ -161,6 +164,7 @@ private fun QuickSettingsPanelLayout(
             modifier = modifier,
         ) {
             brightness()
+            BluenixxVolumeSlider()
             tiles()
             media()
         }
