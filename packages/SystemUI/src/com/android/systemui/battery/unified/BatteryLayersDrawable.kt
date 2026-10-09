@@ -300,12 +300,12 @@ class BatteryLayersDrawable(
          */
         val Metrics =
             object : M {
-                override val ViewportWidth: Float = 24f
+                override val ViewportWidth: Float = 22f
                 override val ViewportHeight: Float = 14f
 
                 override val AttrFullCanvasInsets = RectF(4f, 3f, 2f, 3f)
-                override val AttrRightCanvasInsets = RectF(16f, 4f, 2f, 4f)
-                override val AttrRightCanvasInsetsRtl = RectF(14f, 4f, 4f, 4f)
+                override val AttrRightCanvasInsets = RectF(14f, 4f, 2f, 4f)
+                override val AttrRightCanvasInsetsRtl = RectF(12f, 4f, 4f, 4f)
             }
 
         /**

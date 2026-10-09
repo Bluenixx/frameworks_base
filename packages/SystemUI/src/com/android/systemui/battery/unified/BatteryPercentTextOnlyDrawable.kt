@@ -74,6 +74,13 @@ class BatteryPercentTextOnlyDrawable(font: Typeface) : Drawable() {
     override fun draw(canvas: Canvas) {
         val rtl = layoutDirection == View.LAYOUT_DIRECTION_RTL
         val totalAvailableHeight = CanvasHeight * vScale
+        // Bluenixx: shrink the text so 3 digits still fit the narrower body.
+        textPaint.textSize = TextSize * vScale
+        val maxTextWidth = CanvasWidth * hScale
+        val fullWidth = textPaint.measureText(percentText)
+        if (fullWidth > maxTextWidth) {
+            textPaint.textSize *= maxTextWidth / fullWidth
+        }
 
         // Distribute the vertical whitespace around the text. This is a simplified version of
         // the equation ((C - T) / 2) + T - V, where C == canvas height, T == text height, and V
@@ -111,7 +118,7 @@ class BatteryPercentTextOnlyDrawable(font: Typeface) : Drawable() {
         const val ViewportInsetRight = 2f
         const val ViewportInsetTop = 2f
         const val CanvasHeight = 10f
-        const val CanvasWidth = 18f
+        const val CanvasWidth = 16f
 
         // raise the text up by a smidgen so that it is more centered. Experimentally determined
         const val VerticalNudge = 1.5f
