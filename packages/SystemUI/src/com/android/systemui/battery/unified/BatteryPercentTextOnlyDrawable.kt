@@ -118,7 +118,7 @@ class BatteryPercentTextOnlyDrawable(font: Typeface) : Drawable() {
         const val ViewportInsetRight = 2f
         const val ViewportInsetTop = 2f
         const val CanvasHeight = 10f
-        const val CanvasWidth = 16f
+        const val CanvasWidth = 14f
 
         // raise the text up by a smidgen so that it is more centered. Experimentally determined
         const val VerticalNudge = 1.5f

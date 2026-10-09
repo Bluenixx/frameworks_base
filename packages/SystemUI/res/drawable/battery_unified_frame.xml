@@ -17,9 +17,9 @@
 
 <!-- Unified battery frame for BatteryLayersDrawable.kt -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="22dp"
+    android:width="20dp"
     android:height="14dp"
-    android:viewportWidth="22.0"
+    android:viewportWidth="20.0"
     android:viewportHeight="14.0">
     <!-- body -->
     <path

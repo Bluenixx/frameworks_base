@@ -36,7 +36,7 @@
 
     <!-- SVG path description for the battery frame of the unified battery drawable
     (BatteryLayersDrawable.kt). Drawn on a 24x14 canvas. Not suitable outside in any other context -->
-    <string name="battery_unified_frame_path_string" translatable="false">M2.75,5.25C2.75,2.765 4.765,0.75 7.25,0.75H16.75C19.235,0.75 21.25,2.765 21.25,5.25V8.75C21.25,11.235 19.235,13.25 16.75,13.25H7.25C4.765,13.25 2.75,11.235 2.75,8.75Z</string>
+    <string name="battery_unified_frame_path_string" translatable="false">M9,0.75H13C16.452,0.75 19.25,3.548 19.25,7C19.25,10.452 16.452,13.25 13,13.25H9C5.548,13.25 2.75,10.452 2.75,7C2.75,3.548 5.548,0.75 9,0.75Z</string>
 
     <!-- A message that appears when the battery remaining estimate is low in a dialog.  This is
     appended to the subtitle of the low battery alert.  "percentage" is the percentage of battery

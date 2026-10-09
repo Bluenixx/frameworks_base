@@ -71,12 +71,12 @@ class BatterySpaceSharingPercentTextDrawable(font: Typeface) : Drawable() {
         when (numberOfCharacters) {
             3 -> {
                 verticalNudge = 1f
-                textPaint.textSize = 5.5f * hScale
+                textPaint.textSize = 5f * hScale
             }
             // 1, 2
             else -> {
                 verticalNudge = 1.25f
-                textPaint.textSize = 8f * hScale
+                textPaint.textSize = 7.5f * hScale
             }
         }
     }
@@ -133,7 +133,7 @@ class BatterySpaceSharingPercentTextDrawable(font: Typeface) : Drawable() {
         private const val ViewportInsetLeftRtl = 2f
         private const val ViewportInsetTop = 2f
 
-        private const val CanvasWidth = 10f
+        private const val CanvasWidth = 8f
         private const val CanvasHeight = 10f
     }
 }

@@ -17,9 +17,9 @@
 
 <!-- Vector description of the battery gutter: the background of the fill -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="22dp"
+    android:width="20dp"
     android:height="14dp"
-    android:viewportWidth="22.0"
+    android:viewportWidth="20.0"
     android:viewportHeight="14.0">
     <path
         android:pathData="@string/battery_unified_frame_path_string"
