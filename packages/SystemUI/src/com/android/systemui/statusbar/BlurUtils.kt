@@ -16,6 +16,7 @@
 
 package com.android.systemui.statusbar
 
+import com.android.systemui.bluenixx.BluenixxBlur
 import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.content.res.Resources
@@ -138,6 +139,20 @@ constructor(
      * @param scale blur scale effect relative to 1.0
      */
     fun applyBlur(viewRootImpl: ViewRootImpl?, radius: Int, opaque: Boolean, scale: Float = 1.0f) {
+        applyBlurInternal(
+            viewRootImpl,
+            BluenixxBlur.scale(viewRootImpl?.view?.context, radius),
+            opaque,
+            scale,
+        )
+    }
+
+    private fun applyBlurInternal(
+        viewRootImpl: ViewRootImpl?,
+        radius: Int,
+        opaque: Boolean,
+        scale: Float,
+    ) {
         if (viewRootImpl == null || !viewRootImpl.surfaceControl.isValid) {
             return
         }
