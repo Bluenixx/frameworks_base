@@ -18,6 +18,15 @@ package com.android.systemui.keyguard.ui.view
 
 import android.companion.virtualdevice.flags.Flags
 import android.content.Context
+import android.database.ContentObserver
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
+import android.os.Handler
+import android.os.Looper
+import android.os.UserHandle
+import android.provider.Settings
+import android.util.Base64
 import android.graphics.drawable.AnimatedStateListDrawable
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.util.AttributeSet
@@ -63,6 +72,48 @@ constructor(
     var accessibilityHintType: AccessibilityHintType = AccessibilityHintType.NONE
 
     private var animatedIconDrawable: AnimatedStateListDrawable = AnimatedStateListDrawable()
+
+    private var customFp: Drawable? = loadCustomFp()
+
+    private fun loadCustomFp(): Drawable? =
+        try {
+            val b64 = Settings.System.getStringForUser(
+                context.contentResolver, KEY_FP_ICON, UserHandle.USER_CURRENT) ?: return null
+            val bytes = Base64.decode(b64, Base64.NO_WRAP)
+            BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                ?.let { BitmapDrawable(context.resources, it) }
+        } catch (e: Exception) {
+            null
+        }
+
+    private fun refreshIcons() {
+        animatedIconDrawable = AnimatedStateListDrawable()
+        setupIconStates()
+        setupIconTransitions()
+        iconView.setImageDrawable(animatedIconDrawable)
+    }
+
+    private val fpObserver = object : ContentObserver(Handler(Looper.getMainLooper())) {
+        override fun onChange(selfChange: Boolean) {
+            customFp = loadCustomFp()
+            refreshIcons()
+        }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        context.contentResolver.registerContentObserver(
+            Settings.System.getUriFor(KEY_FP_ICON), false, fpObserver, UserHandle.USER_ALL)
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        context.contentResolver.unregisterContentObserver(fpObserver)
+    }
+
+    companion object {
+        const val KEY_FP_ICON = "bluenixx_fp_icon_b64"
+    }
 
     init {
         setupIconStates()
@@ -127,7 +178,7 @@ constructor(
         // FINGERPRINT
         animatedIconDrawable.addState(
             getIconState(IconType.FINGERPRINT, false),
-            context.getDrawable(R.drawable.ic_fingerprint)!!,
+            customFp ?: context.getDrawable(R.drawable.ic_fingerprint)!!,
             R.id.locked_fp,
         )
 
@@ -165,18 +216,22 @@ constructor(
 
     private fun setupIconTransitions() {
         // LockscreenFp <=> LockscreenUnlocked
+        if (customFp == null) {
         animatedIconDrawable.addTransition(
             R.id.locked_fp,
             R.id.unlocked,
             context.getDrawable(R.drawable.fp_to_unlock) as AnimatedVectorDrawable,
             /* reversible */ false,
         )
+        }
+        if (customFp == null) {
         animatedIconDrawable.addTransition(
             R.id.unlocked,
             R.id.locked_fp,
             context.getDrawable(R.drawable.unlock_to_fp) as AnimatedVectorDrawable,
             /* reversible */ false,
         )
+        }
 
         // LockscreenLocked <=> AodLocked
         animatedIconDrawable.addTransition(
@@ -221,12 +276,14 @@ constructor(
         )
 
         // LockscreenFingerprint => LockscreenLocked
+        if (customFp == null) {
         animatedIconDrawable.addTransition(
             R.id.locked_fp,
             R.id.locked,
             context.getDrawable(R.drawable.fp_to_locked) as AnimatedVectorDrawable,
             /* reversible */ false,
         )
+        }
 
         // LockscreenUnlocked <=> AodLocked
         animatedIconDrawable.addTransition(
