@@ -85,6 +85,7 @@ public interface HomeStatusBarComponent {
         getHeadsUpAppearanceController().init();
         getPhoneStatusBarViewController().init();
         getStatusBarDemoMode().init();
+        getBluenixxDynamicBarController().init();
     }
 
     /** */
@@ -103,6 +104,10 @@ public interface HomeStatusBarComponent {
     /** */
     @HomeStatusBarScope
     StatusBarDemoMode getStatusBarDemoMode();
+
+    /** Bluenixx media capsule controller. */
+    @HomeStatusBarScope
+    BluenixxDynamicBarController getBluenixxDynamicBarController();
 
     /** */
     @HomeStatusBarScope
