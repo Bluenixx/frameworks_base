@@ -1337,5 +1337,15 @@
             android:exported="true"
            />
 
-    </application>
+
+    <receiver
+            android:name="com.android.systemui.shared.clocks.BluenixxClockFontReceiver"
+            android:exported="true"
+            android:permission="com.android.systemui.permission.SELF">
+            <intent-filter>
+                <action android:name="com.android.systemui.action.SET_BLUENIXX_CLOCK_FONT" />
+            </intent-filter>
+        </receiver>
+
+</application>
 </manifest>

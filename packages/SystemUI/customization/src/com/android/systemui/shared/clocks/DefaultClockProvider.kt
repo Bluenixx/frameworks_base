@@ -71,9 +71,16 @@ constructor(
         val buffers = messageBuffers ?: ClockMessageBuffers(ClockLogger.DEFAULT_MESSAGE_BUFFER)
         val fontAxes = getDefaultAxes(settings).merge(settings.axes)
         val clockSettings = settings.copy(axes = ClockAxisStyle(fontAxes))
+        val customFontPath = settings.metadata.optString("bluenixx_clock_font", "")
+        val customTypeface = if (customFontPath.isNotBlank()) {
+            runCatching { Typeface.createFromFile(customFontPath) }.getOrNull()
+        } else {
+            null
+        }
+
         val typefaceCache =
             TypefaceCache<Unit>(buffers.infraMessageBuffer, NUM_CLOCK_FONT_ANIMATION_STEPS) {
-                FLEX_TYPEFACE
+                customTypeface ?: FLEX_TYPEFACE
             }
         return FlexClockController(
             FlexClockContext(

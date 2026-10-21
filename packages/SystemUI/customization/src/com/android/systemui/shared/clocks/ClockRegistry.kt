@@ -348,7 +348,15 @@ open class ClockRegistry(
                 logger.e("Failed to parse clock settings", ex)
                 null
             }
+        val previousFontPath =
+            settings?.metadata?.optString("bluenixx_clock_font", "").orEmpty()
         settings = result
+        val newFontPath =
+            result?.metadata?.optString("bluenixx_clock_font", "").orEmpty()
+
+        if (previousFontPath != newFontPath) {
+            triggerOnCurrentClockChanged()
+        }
     }
 
     @OpenForTesting
