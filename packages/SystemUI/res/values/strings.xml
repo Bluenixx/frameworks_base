@@ -1211,6 +1211,7 @@
     <!-- QuickSettings: Notifications [CHAR LIMIT=NONE] -->
     <!-- QuickSettings: Flashlight [CHAR LIMIT=NONE] -->
     <string name="quick_settings_flashlight_label">Flashlight</string>
+    <string name="quick_settings_screenshot_label">Screenshot</string>
     <!-- QuickSettings: Flashlight, used when it's not available due to camera in use [CHAR LIMIT=NONE] -->
     <string name="quick_settings_flashlight_camera_in_use">Camera in use</string>
     <!-- Flashlight dialog title [CHAR LIMIT=NONE] -->
