@@ -1058,10 +1058,6 @@ public class WindowManagerService extends IWindowManager.Stub
         }
 
         void updateDisableSecureWindows() {
-            if (!SystemProperties.getBoolean(SYSTEM_DEBUGGABLE, false)) {
-                return;
-            }
-
             boolean disableSecureWindows;
             try {
                 disableSecureWindows = Settings.Secure.getIntForUser(mContext.getContentResolver(),
