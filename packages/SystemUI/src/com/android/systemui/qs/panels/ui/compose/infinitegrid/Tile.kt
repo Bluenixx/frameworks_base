@@ -528,11 +528,11 @@ private object TileDefaults {
     @ReadOnlyComposable
     fun activeTileColors(): TileColors =
         TileColors(
-            background = MaterialTheme.colorScheme.primaryContainer,
-            iconBackground = MaterialTheme.colorScheme.primaryContainer,
-            label = MaterialTheme.colorScheme.onPrimaryContainer,
-            secondaryLabel = MaterialTheme.colorScheme.onPrimaryContainer,
-            icon = MaterialTheme.colorScheme.onPrimaryContainer,
+            background = MaterialTheme.colorScheme.primary,
+            iconBackground = MaterialTheme.colorScheme.primary,
+            label = MaterialTheme.colorScheme.onPrimary,
+            secondaryLabel = MaterialTheme.colorScheme.onPrimary,
+            icon = MaterialTheme.colorScheme.onPrimary,
         )
 
     /** An active tile with dual target only show the active color on the icon */

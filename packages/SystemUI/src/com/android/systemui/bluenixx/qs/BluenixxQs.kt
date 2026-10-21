@@ -20,6 +20,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.State
@@ -33,7 +34,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.android.systemui.media.remedia.ui.compose.MediaPresentationStyle
-import com.android.systemui.res.R
 import kotlin.math.roundToInt
 
 private const val KEY_MEDIA_COMPACT = "bluenixx_qs_media_size" // 0 = normal, 1 = compacto
@@ -104,12 +104,9 @@ fun BluenixxVolumeSlider(modifier: Modifier = Modifier) {
                 valueRange = 0f..max.toFloat(),
                 modifier = Modifier.weight(1f),
             )
-            Icon(
-                painter = painterResource(
-                    if (compact) R.drawable.bluenixx_ic_media_expand
-                    else R.drawable.bluenixx_ic_media_compact),
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurface,
+            Text(
+                text = if (compact) "▴" else "▾",
+                color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier
                     .clickable {
                         Settings.Secure.putInt(
