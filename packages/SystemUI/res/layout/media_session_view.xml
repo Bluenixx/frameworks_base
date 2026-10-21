@@ -209,7 +209,7 @@
 
     <ImageButton
         android:id="@+id/actionPlayPause"
-        style="@style/MediaPlayer.SessionAction.Primary"
+        style="@style/MediaPlayer.SessionAction.PlayPause"
         android:layout_width="@dimen/qs_media_action_play_pause_width"
         android:layout_height="48dp"
         android:layout_marginStart="@dimen/qs_media_padding"

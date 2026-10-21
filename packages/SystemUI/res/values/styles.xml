@@ -925,6 +925,11 @@
         <item name="android:scaleType">centerInside</item>
     </style>
 
+    <style name="MediaPlayer.SessionAction.PlayPause" parent="MediaPlayer.SessionAction.Primary">
+        <item name="android:background">@null</item>
+        <item name="android:backgroundTint">@null</item>
+    </style>
+
     <style name="MediaPlayer.SessionAction.Primary" parent="MediaPlayer.SessionAction">
         <item name="android:tint">@android:color/system_on_primary_dark</item>
         <item name="android:background">@drawable/qs_media_round_button_background</item>
