@@ -91,6 +91,12 @@ constructor(
         setupIconStates()
         setupIconTransitions()
         iconView.setImageDrawable(animatedIconDrawable)
+        iconView.scaleType = if (customFp != null) {
+            ImageView.ScaleType.FIT_CENTER
+        } else {
+            ImageView.ScaleType.CENTER_CROP
+        }
+        bgView.visibility = if (customFp != null) View.GONE else View.VISIBLE
     }
 
     private val fpObserver = object : ContentObserver(Handler(Looper.getMainLooper())) {
@@ -303,7 +309,11 @@ constructor(
     }
 
     private fun addIconImageView() {
-        iconView.scaleType = ImageView.ScaleType.CENTER_CROP
+        iconView.scaleType = if (customFp != null) {
+            ImageView.ScaleType.FIT_CENTER
+        } else {
+            ImageView.ScaleType.CENTER_CROP
+        }
         iconView.setImageDrawable(animatedIconDrawable)
         addView(iconView)
         val lp = iconView.layoutParams as LayoutParams
@@ -315,6 +325,9 @@ constructor(
 
     private fun addBgImageView() {
         bgView.setImageDrawable(context.getDrawable(R.drawable.fingerprint_bg))
+        // A custom PNG may have transparent pixels; don't draw the stock circular
+        // background behind it. Keep the stock background for the default icon.
+        bgView.visibility = if (customFp != null) View.GONE else View.VISIBLE
         addView(bgView)
         val lp = bgView.layoutParams as LayoutParams
         lp.height = ViewGroup.LayoutParams.MATCH_PARENT
