@@ -115,7 +115,6 @@ import com.android.compose.theme.PlatformTheme
 import com.android.systemui.Dumpable
 import com.android.systemui.Flags
 import com.android.systemui.Flags.notificationShadeBlur
-import com.android.systemui.bluenixx.qs.bluenixxMediaStyle
 import com.android.systemui.brightness.ui.compose.BrightnessSliderContainer
 import com.android.systemui.brightness.ui.compose.ContainerColors
 import com.android.systemui.compose.modifiers.sysUiResTagContainer
@@ -883,7 +882,7 @@ constructor(
                                     MediaObject(
                                         mediaHost = viewModel.qsMediaHost,
                                         mediaViewModelFactory = viewModel.mediaViewModelFactory,
-                                        mediaPresentationStyle = bluenixxMediaStyle(),
+                                        mediaPresentationStyle = MediaPresentationStyle.Default,
                                         onSwipeToDismiss = viewModel::onMediaSwipeToDismiss,
                                         behavior = viewModel.qsMediaUiBehavior,
                                         visible = isListening,
