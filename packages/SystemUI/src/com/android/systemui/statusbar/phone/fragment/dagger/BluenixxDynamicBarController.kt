@@ -3,6 +3,7 @@ package com.android.systemui.statusbar.phone.fragment.dagger
 import android.content.Context
 import android.database.ContentObserver
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Handler
 import android.os.Looper
@@ -14,11 +15,14 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.palette.graphics.Palette
 import com.android.systemui.dagger.qualifiers.RootView
 import com.android.systemui.media.controls.domain.pipeline.MediaDataManager
 import com.android.systemui.media.controls.shared.model.MediaData
 import com.android.systemui.res.R
 import com.android.systemui.statusbar.phone.PhoneStatusBarView
+import com.android.systemui.dagger.qualifiers.Background
+import java.util.concurrent.Executor
 import javax.inject.Inject
 
 /**
@@ -28,6 +32,7 @@ import javax.inject.Inject
 class BluenixxDynamicBarController @Inject constructor(
     @RootView private val root: PhoneStatusBarView,
     private val mediaDataManager: MediaDataManager,
+    @Background private val paletteExecutor: Executor,
 ) {
     private val context: Context
         get() = root.context
@@ -37,6 +42,8 @@ class BluenixxDynamicBarController @Inject constructor(
 
     private var attached = false
     private var observerRegistered = false
+    private var paletteCacheKey: String? = null
+    private var paletteCacheColor = Color.rgb(36, 36, 40)
 
     private val capsule: LinearLayout =
         root.requireViewById(R.id.dynamic_bar_capsule)
@@ -119,6 +126,7 @@ class BluenixxDynamicBarController @Inject constructor(
     private fun unregister() {
         if (!attached) return
         attached = false
+        paletteCacheKey = null
 
         mediaDataManager.removeListener(mediaListener)
 
@@ -159,6 +167,49 @@ class BluenixxDynamicBarController @Inject constructor(
 
         artwork.setImageDrawable(drawable)
         artwork.visibility = if (drawable != null) View.VISIBLE else View.GONE
+
+        val cacheKey =
+            "${media?.packageName}:${media?.song}:${media?.artwork?.hashCode()}"
+        if (cacheKey != paletteCacheKey) {
+            paletteCacheKey = cacheKey
+            val bitmap = (drawable as? BitmapDrawable)?.bitmap
+            if (bitmap == null) {
+                paletteCacheColor = Color.rgb(36, 36, 40)
+            } else {
+                paletteExecutor.execute {
+                    val color = runCatching {
+                        Palette.from(bitmap).generate()
+                            .getDominantColor(Color.rgb(36, 36, 40))
+                    }.getOrDefault(Color.rgb(36, 36, 40))
+
+                    handler.post {
+                        val currentMedia = players.values.lastOrNull {
+                            it.active && !it.resumption &&
+                                (!it.song.isNullOrBlank() || !it.artist.isNullOrBlank())
+                        }
+                        val currentKey =
+                            "${currentMedia?.packageName}:${currentMedia?.song}:${currentMedia?.artwork?.hashCode()}"
+                        if (attached && currentKey == cacheKey) {
+                            paletteCacheColor = color
+                            val darkColor = Color.rgb(
+                                (Color.red(color) * 0.42f).toInt(),
+                                (Color.green(color) * 0.42f).toInt(),
+                                (Color.blue(color) * 0.42f).toInt(),
+                            )
+                            (capsule.background as? GradientDrawable)?.setColor(darkColor)
+                        }
+                    }
+                }
+            }
+        }
+
+        val dominantColor = paletteCacheColor
+        val darkColor = Color.rgb(
+            (Color.red(dominantColor) * 0.42f).toInt(),
+            (Color.green(dominantColor) * 0.42f).toInt(),
+            (Color.blue(dominantColor) * 0.42f).toInt(),
+        )
+        (capsule.background as? GradientDrawable)?.setColor(darkColor)
 
         if (capsule.visibility != View.VISIBLE) {
             capsule.alpha = 0f
