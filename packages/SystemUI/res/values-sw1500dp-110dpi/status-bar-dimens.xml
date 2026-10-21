@@ -44,7 +44,7 @@
 
     <!-- Original canvas is 24x14. These dimens reflect that ratio, with 12sp height instead  -->
     <dimen name="status_bar_battery_unified_icon_width">30.9sp</dimen>
-    <dimen name="status_bar_battery_unified_icon_height">21.6sp</dimen>
+    <dimen name="status_bar_battery_unified_icon_height">19.7sp</dimen>
 
     <!-- The battery icon is 13sp tall, but the other system icons are 15sp tall (see
          @*android:dimen/status_bar_system_icon_size) with some top and bottom padding embedded in
