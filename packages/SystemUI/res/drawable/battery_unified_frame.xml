@@ -17,9 +17,9 @@
 
 <!-- Unified battery frame for BatteryLayersDrawable.kt -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="22dp"
+    android:width="24dp"
     android:height="14dp"
-    android:viewportWidth="22.0"
+    android:viewportWidth="24.0"
     android:viewportHeight="14.0">
     <!-- body -->
     <path
@@ -29,6 +29,6 @@
         />
     <!-- cap -->
     <path
-        android:pathData="M0,5C0,4.448 0.448,4 1,4H1.5V10H1C0.448,10 0,9.552 0,9V5Z"
+        android:pathData="M0,4C0,3.448 0.448,3 1,3H1.5V11H1C0.448,11 0,10.552 0,10V4Z"
         android:fillColor="#000"/>
 </vector>
