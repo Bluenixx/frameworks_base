@@ -75,6 +75,9 @@ constructor(
 
     private var customFp: Drawable? = loadCustomFp()
 
+    val hasCustomFingerprintIcon: Boolean
+        get() = customFp != null
+
     private fun loadCustomFp(): Drawable? =
         try {
             val b64 = Settings.System.getStringForUser(

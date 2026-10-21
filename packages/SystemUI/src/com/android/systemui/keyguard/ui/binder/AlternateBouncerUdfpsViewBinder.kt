@@ -65,7 +65,15 @@ object AlternateBouncerUdfpsViewBinder {
                         view.getIconState(fgViewModel.type, fgViewModel.useAodVariant),
                         /* merge */ false,
                     )
-                    fgIconView.imageTintList = ColorStateList.valueOf(fgViewModel.tint)
+                    fgIconView.imageTintList =
+                        if (fgViewModel.type == DeviceEntryIconView.IconType.FINGERPRINT &&
+                            !fgViewModel.useAodVariant &&
+                            view.hasCustomFingerprintIcon
+                        ) {
+                            null
+                        } else {
+                            ColorStateList.valueOf(fgViewModel.tint)
+                        }
                     fgIconView.setPadding(
                         fgViewModel.padding,
                         fgViewModel.padding,

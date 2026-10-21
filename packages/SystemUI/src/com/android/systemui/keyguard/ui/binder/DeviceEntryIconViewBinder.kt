@@ -254,7 +254,16 @@ object DeviceEntryIconViewBinder {
                                     )
                             }
                             fgIconView.imageTintList =
-                                ColorStateList.valueOf(overrideColor?.toArgb() ?: viewModel.tint)
+                                if (viewModel.type == DeviceEntryIconView.IconType.FINGERPRINT &&
+                                    !viewModel.useAodVariant &&
+                                    view.hasCustomFingerprintIcon
+                                ) {
+                                    null
+                                } else {
+                                    ColorStateList.valueOf(
+                                        overrideColor?.toArgb() ?: viewModel.tint
+                                    )
+                                }
                             fgIconView.setPadding(
                                 viewModel.padding,
                                 viewModel.padding,
