@@ -928,6 +928,7 @@
     <style name="MediaPlayer.SessionAction.PlayPause" parent="MediaPlayer.SessionAction.Primary">
         <item name="android:background">@null</item>
         <item name="android:backgroundTint">@null</item>
+        <item name="android:tint">@android:color/white</item>
     </style>
 
     <style name="MediaPlayer.SessionAction.Primary" parent="MediaPlayer.SessionAction">
