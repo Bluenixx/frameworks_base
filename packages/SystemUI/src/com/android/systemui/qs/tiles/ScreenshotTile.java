@@ -77,6 +77,11 @@ public class ScreenshotTile extends QSTileImpl<QSTile.BooleanState> {
     }
 
     @Override
+    public android.content.Intent getLongClickIntent() {
+        return null;
+    }
+
+    @Override
     public int getMetricsCategory() {
         return MetricsLogger.VIEW_UNKNOWN;
     }
