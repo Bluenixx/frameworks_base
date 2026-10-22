@@ -687,7 +687,7 @@ class LegacyMediaDataManagerImpl(
             Icon.createWithResource(context, iconId).setTint(themeText).loadDrawable(context),
             action,
             context.getString(R.string.controls_media_button_play),
-            context.getDrawable(R.drawable.ic_media_play_button_container),
+            null,
         )
     }
 

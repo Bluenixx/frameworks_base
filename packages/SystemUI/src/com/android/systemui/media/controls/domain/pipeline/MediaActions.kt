@@ -162,7 +162,7 @@ private fun getStandardAction(
                 context.getDrawable(R.drawable.ic_media_play_button),
                 { controller.transportControls.play() },
                 context.getString(R.string.controls_media_button_play),
-                context.getDrawable(R.drawable.ic_media_play_button_container),
+                null,
             )
         }
         PlaybackState.ACTION_PAUSE -> {
@@ -170,7 +170,7 @@ private fun getStandardAction(
                 context.getDrawable(R.drawable.ic_media_pause_button),
                 { controller.transportControls.pause() },
                 context.getString(R.string.controls_media_button_pause),
-                context.getDrawable(R.drawable.ic_media_pause_button_container),
+                null,
             )
         }
         PlaybackState.ACTION_SKIP_TO_PREVIOUS -> {
