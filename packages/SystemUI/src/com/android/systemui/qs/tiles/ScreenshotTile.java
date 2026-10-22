@@ -82,6 +82,13 @@ public class ScreenshotTile extends QSTileImpl<QSTile.BooleanState> {
     }
 
     @Override
+    public BooleanState newTileState() {
+        BooleanState state = new BooleanState();
+        state.handlesLongClick = false;
+        return state;
+    }
+
+    @Override
     public int getMetricsCategory() {
         return MetricsLogger.VIEW_UNKNOWN;
     }
