@@ -18,7 +18,6 @@ package com.android.systemui.shared.system;
 
 import static android.view.CrossWindowBlurListeners.CROSS_WINDOW_BLUR_SUPPORTED;
 
-import static com.android.systemui.Flags.blurOnMoreSurfaces;
 
 import android.app.ActivityManager;
 import android.content.res.Resources;
@@ -37,7 +36,7 @@ public abstract class BlurUtils {
     }
 
     public static boolean isVolumeAndPowerBlurEnabled() {
-        return blurOnMoreSurfaces() && isBlurExpansionEnabledOnDevice();
+        return isBlurExpansionEnabledOnDevice();
     }
 
     private static boolean isBlurExpansionEnabledOnDevice() {
