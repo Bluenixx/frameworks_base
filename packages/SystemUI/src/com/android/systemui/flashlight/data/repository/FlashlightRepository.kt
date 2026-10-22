@@ -219,11 +219,29 @@ constructor(
             return cc.physicalCameraIds.isNotEmpty()
         }
 
-        // Prefer logical multi-camera with flash — the HAL routes torch through these
-        // on devices where multiple cameras share a single flash unit.
+        fun supportsAdjustableLevels(id: String): Boolean {
+            val cc = cameraManager.getCameraCharacteristics(id)
+            val defaultLevel =
+                cc.get(CameraCharacteristics.FLASH_INFO_STRENGTH_DEFAULT_LEVEL)
+            val maxLevel =
+                cc.get(CameraCharacteristics.FLASH_INFO_STRENGTH_MAXIMUM_LEVEL)
+
+            return defaultLevel != null &&
+                maxLevel != null &&
+                maxLevel > BASE_TORCH_LEVEL
+        }
+
+        val backFlashIds = ids.filter { isBackFlashCamera(it) }
+        val logicalFlashIds = backFlashIds.filter { isLogicalCamera(it) }
+
+        // Prefer a logical camera that supports torch strength. If it does not
+        // expose strength levels, try another back-facing flash camera that does.
+        // Preserve the logical-camera preference as a fallback for torch routing.
         val selectedId =
-            ids.firstOrNull { isBackFlashCamera(it) && isLogicalCamera(it) }
-                ?: ids.firstOrNull { isBackFlashCamera(it) }
+            logicalFlashIds.firstOrNull { supportsAdjustableLevels(it) }
+                ?: backFlashIds.firstOrNull { supportsAdjustableLevels(it) }
+                ?: logicalFlashIds.firstOrNull()
+                ?: backFlashIds.firstOrNull()
 
         if (selectedId != null) {
             val cc = cameraManager.getCameraCharacteristics(selectedId)
