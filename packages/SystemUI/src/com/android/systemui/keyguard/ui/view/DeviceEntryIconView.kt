@@ -19,6 +19,7 @@ package com.android.systemui.keyguard.ui.view
 import android.companion.virtualdevice.flags.Flags
 import android.content.Context
 import android.database.ContentObserver
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
@@ -78,16 +79,63 @@ constructor(
     val hasCustomFingerprintIcon: Boolean
         get() = customFp != null
 
-    private fun loadCustomFp(): Drawable? =
-        try {
-            val b64 = Settings.System.getStringForUser(
-                context.contentResolver, KEY_FP_ICON, UserHandle.USER_CURRENT) ?: return null
-            val bytes = Base64.decode(b64, Base64.NO_WRAP)
-            BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                ?.let { BitmapDrawable(context.resources, it) }
+    private fun loadCustomFp(): Drawable? {
+        return try {
+            val encoded = Settings.System.getStringForUser(
+                context.contentResolver,
+                KEY_FP_ICON,
+                UserHandle.USER_CURRENT
+            ) ?: return null
+
+            val bytes = Base64.decode(encoded, Base64.DEFAULT)
+            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                ?: return null
+
+            val width = bitmap.width
+            val height = bitmap.height
+            val pixels = IntArray(width * height)
+            bitmap.getPixels(pixels, 0, width, 0, 0, width, height)
+
+            var left = width
+            var top = height
+            var right = -1
+            var bottom = -1
+
+            for (y in 0 until height) {
+                for (x in 0 until width) {
+                    if ((pixels[y * width + x] ushr 24) > 8) {
+                        left = minOf(left, x)
+                        top = minOf(top, y)
+                        right = maxOf(right, x)
+                        bottom = maxOf(bottom, y)
+                    }
+                }
+            }
+
+            if (right < left || bottom < top) {
+                bitmap.recycle()
+                return null
+            }
+
+            val padding = (maxOf(right - left + 1, bottom - top + 1) * 0.03f)
+                .toInt()
+
+            left = maxOf(0, left - padding)
+            top = maxOf(0, top - padding)
+            right = minOf(width - 1, right + padding)
+            bottom = minOf(height - 1, bottom + padding)
+
+            val cropped = Bitmap.createBitmap(
+                bitmap, left, top, right - left + 1, bottom - top + 1
+            )
+
+            if (cropped !== bitmap) bitmap.recycle()
+
+            BitmapDrawable(context.resources, cropped)
         } catch (e: Exception) {
             null
         }
+    }
 
     private fun refreshIcons() {
         animatedIconDrawable = AnimatedStateListDrawable()
