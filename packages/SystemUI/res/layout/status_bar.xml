@@ -102,6 +102,56 @@
                         android:gravity="center_vertical|start"
                     />
 
+                    <!-- DYNAMICBAR_PATCH_START -->
+                    <LinearLayout
+                    android:id="@+id/dynamic_bar_capsule"
+                    android:layout_width="wrap_content"
+                    android:layout_height="26dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingStart="6dp"
+                    android:paddingEnd="6dp"
+                    android:background="#E61A1A1A"
+                    android:visibility="gone"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="4dp"
+                    android:contentDescription="Controles de mídia">
+
+                    <ImageView
+                    android:id="@+id/dynamic_bar_artwork"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+
+                    <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical"
+                    android:paddingStart="6dp">
+
+                    <TextView
+                    android:id="@+id/dynamic_bar_title"
+                    android:layout_width="84dp"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="#FFFFFFFF"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                    <TextView
+                    android:id="@+id/dynamic_bar_artist"
+                    android:layout_width="84dp"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="#FFCCCCCC"
+                    android:textSize="9sp" />
+                    </LinearLayout>
+                    </LinearLayout>
+                    <!-- DYNAMICBAR_PATCH_END -->
                     <!-- To avoid chips causing notifs to re-layout, wrap them in a FrameLayout
                     so they can overlap -->
                     <FrameLayout
@@ -208,51 +258,7 @@
         android:paddingTop="@dimen/status_bar_padding_top"
         >
 
-        <LinearLayout
-            android:id="@+id/dynamic_bar_capsule"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingStart="8dp"
-            android:paddingEnd="10dp"
-            android:background="#E61A1A1A"
-            android:visibility="gone">
 
-            <ImageView
-                android:id="@+id/dynamic_bar_artwork"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:scaleType="centerCrop"
-                android:visibility="gone" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center_vertical"
-                android:paddingStart="6dp">
-
-                <TextView
-                    android:id="@+id/dynamic_bar_title"
-                    android:layout_width="116dp"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:textColor="#FFFFFFFF"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/dynamic_bar_artist"
-                    android:layout_width="116dp"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:textColor="#FFCCCCCC"
-                    android:textSize="10sp" />
-            </LinearLayout>
-        </LinearLayout>
 
         <com.android.systemui.statusbar.policy.Clock
             android:id="@+id/clock_center"

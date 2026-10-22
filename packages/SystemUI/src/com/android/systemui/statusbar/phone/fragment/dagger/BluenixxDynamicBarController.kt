@@ -19,6 +19,8 @@ import androidx.palette.graphics.Palette
 import com.android.systemui.dagger.qualifiers.RootView
 import com.android.systemui.media.controls.domain.pipeline.MediaDataManager
 import com.android.systemui.media.controls.shared.model.MediaData
+import com.android.systemui.plugins.statusbar.StatusBarStateController
+import com.android.systemui.statusbar.StatusBarState
 import com.android.systemui.res.R
 import com.android.systemui.statusbar.phone.PhoneStatusBarView
 import com.android.systemui.dagger.qualifiers.Background
@@ -32,6 +34,7 @@ import javax.inject.Inject
 class BluenixxDynamicBarController @Inject constructor(
     @RootView private val root: PhoneStatusBarView,
     private val mediaDataManager: MediaDataManager,
+    private val statusBarStateController: StatusBarStateController,
     @Background private val paletteExecutor: Executor,
 ) {
     private val context: Context
@@ -78,7 +81,50 @@ class BluenixxDynamicBarController @Inject constructor(
         }
     }
 
+    private val statusBarStateListener =
+        object : StatusBarStateController.StateListener {
+            override fun onStateChanged(newState: Int) {
+                render()
+            }
+        }
+
     fun init() {
+        artwork.background = GradientDrawable().apply {
+            shape = GradientDrawable.OVAL
+        }
+        artwork.clipToOutline = true
+
+        capsule.isClickable = true
+        capsule.isFocusable = true
+        capsule.setOnClickListener {
+            val media = players.values.lastOrNull {
+                it.active && !it.resumption &&
+                    (!it.song.isNullOrBlank() || !it.artist.isNullOrBlank())
+            }
+            val clickIntent = media?.clickIntent
+            val opened = if (clickIntent != null) {
+                runCatching {
+                    clickIntent.send()
+                    true
+                }.getOrDefault(false)
+            } else {
+                false
+            }
+
+            if (!opened) {
+                runCatching {
+                    media?.packageName?.let { packageName ->
+                        context.packageManager
+                            .getLaunchIntentForPackage(packageName)
+                            ?.let { intent ->
+                                intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+                                context.startActivity(intent)
+                            }
+                    }
+                }
+            }
+        }
+
         capsule.background = GradientDrawable().apply {
             setColor(Color.rgb(24, 24, 27))
             cornerRadius = 48f * context.resources.displayMetrics.density
@@ -104,6 +150,7 @@ class BluenixxDynamicBarController @Inject constructor(
         attached = true
 
         mediaDataManager.addListener(mediaListener)
+        statusBarStateController.addCallback(statusBarStateListener)
 
         if (!observerRegistered) {
             val keys = listOf(
@@ -129,6 +176,7 @@ class BluenixxDynamicBarController @Inject constructor(
         paletteCacheKey = null
 
         mediaDataManager.removeListener(mediaListener)
+        statusBarStateController.removeCallback(statusBarStateListener)
 
         if (observerRegistered) {
             context.contentResolver.unregisterContentObserver(settingsObserver)
@@ -148,9 +196,9 @@ class BluenixxDynamicBarController @Inject constructor(
                 (!it.song.isNullOrBlank() || !it.artist.isNullOrBlank())
         }
 
-        val centerClock = root.findViewById<View>(R.id.clock_center)
-        val shouldShow = enabled && media != null &&
-            (centerClock == null || centerClock.visibility != View.VISIBLE)
+        val unlockedStatusBar =
+            statusBarStateController.getState() != StatusBarState.KEYGUARD
+        val shouldShow = enabled && media != null && unlockedStatusBar
 
         if (!shouldShow) {
             capsule.animate().cancel()
