@@ -26,6 +26,7 @@ import android.os.UserHandle
 import android.provider.Settings
 import android.text.TextUtils
 import android.view.Gravity
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -77,8 +78,11 @@ class BluenixxDynamicBarController @Inject constructor(
     // Capsule visibility target. Source of truth while enter/exit animations run.
     private var capsuleVisible = false
 
-    // Already-darkened color shared by capsule and panel.
-    private var tintColor = darken(DEFAULT_COLOR)
+    // Colors derived from the artwork: background shared by capsule and panel, plus the accent
+    // and glow colors used by the panel. Animated between tracks.
+    private var palette = BluenixxPalette.default(DEFAULT_COLOR)
+    private val tintColor: Int
+        get() = palette.background
     private var tintKey: String? = null
     private var tintAnimator: ValueAnimator? = null
 
@@ -268,12 +272,6 @@ class BluenixxDynamicBarController @Inject constructor(
     private fun dp(value: Int): Int =
         (value * context.resources.displayMetrics.density + 0.5f).toInt()
 
-    private fun darken(color: Int): Int = Color.rgb(
-        (Color.red(color) * TINT_FACTOR).toInt(),
-        (Color.green(color) * TINT_FACTOR).toInt(),
-        (Color.blue(color) * TINT_FACTOR).toInt(),
-    )
-
     private fun formatTime(milliseconds: Long): String {
         val totalSeconds = milliseconds.coerceAtLeast(0L) / 1000L
         val hours = totalSeconds / 3600L
@@ -346,12 +344,12 @@ class BluenixxDynamicBarController @Inject constructor(
     private fun updateTint(key: String, drawable: Drawable?) {
         val bitmap = (drawable as? BitmapDrawable)?.bitmap
         if (bitmap == null || bitmap.isRecycled) {
-            setTint(darken(DEFAULT_COLOR))
+            setTint(BluenixxPalette.default(DEFAULT_COLOR))
             return
         }
 
         paletteExecutor.execute {
-            val color = runCatching {
+            val result = runCatching {
                 // Palette can't read HARDWARE bitmaps; copy to a software one first.
                 val readable = if (bitmap.config == Bitmap.Config.HARDWARE) {
                     bitmap.copy(Bitmap.Config.ARGB_8888, false)
@@ -359,36 +357,37 @@ class BluenixxDynamicBarController @Inject constructor(
                     bitmap
                 }
                 if (readable == null) {
-                    DEFAULT_COLOR
+                    BluenixxPalette.default(DEFAULT_COLOR)
                 } else {
-                    Palette.from(readable).generate().getDominantColor(DEFAULT_COLOR)
+                    BluenixxPalette.from(Palette.from(readable).generate(), DEFAULT_COLOR)
                 }
-            }.getOrDefault(DEFAULT_COLOR)
+            }.getOrDefault(BluenixxPalette.default(DEFAULT_COLOR))
 
             handler.post {
                 // Drop stale results: another track may have taken over meanwhile.
-                if (attached && tintKey == key) setTint(darken(color))
+                if (attached && tintKey == key) setTint(result)
             }
         }
     }
 
-    private fun setTint(target: Int) {
-        if (target == tintColor) return
+    private fun setTint(target: BluenixxPalette) {
+        if (target == palette) return
 
         tintAnimator?.cancel()
         tintAnimator = null
 
         // No animation while the capsule is hidden (first show / background updates).
         if (!capsuleVisible) {
-            tintColor = target
+            palette = target
             applyTint()
             return
         }
 
-        val animator = ValueAnimator.ofObject(ArgbEvaluator(), tintColor, target)
+        val from = palette
+        val animator = ValueAnimator.ofFloat(0f, 1f)
         animator.duration = COLOR_ANIM_MS
         animator.addUpdateListener {
-            tintColor = it.animatedValue as Int
+            palette = from.blend(target, it.animatedFraction)
             applyTint()
         }
         animator.addListener(object : AnimatorListenerAdapter() {
@@ -402,7 +401,7 @@ class BluenixxDynamicBarController @Inject constructor(
 
     private fun applyTint() {
         (capsule.background as? GradientDrawable)?.setColor(tintColor)
-        playerPanel?.applyTint(tintColor)
+        playerPanel?.applyPalette(palette)
     }
 
     // ------------------------------------------------------------------------------------
@@ -471,7 +470,7 @@ class BluenixxDynamicBarController @Inject constructor(
         val media = currentMedia() ?: return
 
         val panel = PlayerPanel()
-        panel.applyTint(tintColor)
+        panel.applyPalette(palette)
         panel.bind(media)
 
         val dialog = AlertDialog.Builder(context)
@@ -571,29 +570,27 @@ class BluenixxDynamicBarController @Inject constructor(
             text = DURATION_UNKNOWN
         }
 
-        private val seekBar = SeekBar(context).apply {
+        private val seekBar = BluenixxWaveSeekBar(context).apply {
             max = PROGRESS_MAX
-            progressTintList = ColorStateList.valueOf(Color.WHITE)
-            progressBackgroundTintList = ColorStateList.valueOf(TRACK_COLOR)
-            thumbTintList = ColorStateList.valueOf(Color.WHITE)
-            setPadding(dp(10), dp(8), dp(10), dp(8))
             contentDescription = DESC_SEEK
             isEnabled = false
         }
 
         // 0 = custom0, 1 = previous, 2 = play/pause, 3 = next, 4 = custom1
+        // MD3 Expressive-style buttons: tonal pills that morph their corners on press, and a
+        // play/pause button that morphs between a squircle (paused) and a pill (playing).
+        private val shapes = Array(5) { index ->
+            BluenixxMorphShape(
+                dp(SLOT_RADIUS_DP[index]).toFloat(),
+                dp(SLOT_PRESSED_RADIUS_DP[index]).toFloat(),
+            )
+        }
+
         private val slots = Array(5) { index ->
             ImageView(context).apply {
                 scaleType = ImageView.ScaleType.CENTER_INSIDE
                 imageTintList = ColorStateList.valueOf(Color.WHITE)
-                val padding = if (index == 2) dp(10) else dp(14)
-                setPadding(padding, padding, padding, padding)
-                if (index == 2) {
-                    background = GradientDrawable().apply {
-                        shape = GradientDrawable.OVAL
-                        setColor(PLAY_BACKGROUND)
-                    }
-                }
+                background = shapes[index].drawable
             }
         }
 
@@ -659,7 +656,7 @@ class BluenixxDynamicBarController @Inject constructor(
 
             val times = LinearLayout(context).apply {
                 orientation = LinearLayout.HORIZONTAL
-                setPadding(dp(10), 0, dp(10), 0)
+                setPadding(dp(8), 0, dp(8), 0)
                 addView(
                     elapsedLabel,
                     LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
@@ -681,8 +678,15 @@ class BluenixxDynamicBarController @Inject constructor(
                 orientation = LinearLayout.HORIZONTAL
                 gravity = Gravity.CENTER
             }
-            slots.forEach { slot ->
-                controls.addView(slot, LinearLayout.LayoutParams(0, dp(56), 1f))
+            slots.forEachIndexed { index, slot ->
+                controls.addView(
+                    slot,
+                    LinearLayout.LayoutParams(0, dp(SLOT_HEIGHT_DP[index]), SLOT_WEIGHT[index])
+                        .apply {
+                            marginStart = dp(3)
+                            marginEnd = dp(3)
+                        }
+                )
             }
             addView(
                 controls,
@@ -702,6 +706,17 @@ class BluenixxDynamicBarController @Inject constructor(
         }
 
         init {
+            slots.forEachIndexed { index, slot ->
+                slot.setOnTouchListener { _, event ->
+                    when (event.actionMasked) {
+                        MotionEvent.ACTION_DOWN -> shapes[index].press(true)
+                        MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL ->
+                            shapes[index].press(false)
+                    }
+                    false
+                }
+            }
+
             seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
                 override fun onStartTrackingTouch(bar: SeekBar) {
                     userSeeking = true
@@ -725,8 +740,20 @@ class BluenixxDynamicBarController @Inject constructor(
             })
         }
 
-        fun applyTint(color: Int) {
-            (view.background as? GradientDrawable)?.setColor(color)
+        fun applyPalette(p: BluenixxPalette) {
+            (view.background as? GradientDrawable)?.setColor(p.background)
+            val tonal = BluenixxPalette.withAlpha(p.accent, TONAL_ALPHA)
+            for (i in slots.indices) {
+                if (i == 2) {
+                    // Play/pause: accent container, dark icon.
+                    shapes[i].setColor(p.accent)
+                    slots[i].imageTintList = ColorStateList.valueOf(p.background)
+                } else {
+                    shapes[i].setColor(tonal)
+                    slots[i].imageTintList = ColorStateList.valueOf(Color.WHITE)
+                }
+            }
+            seekBar.setColors(p.accent, p.glowA, p.glowB, p.glowC)
         }
 
         /** Rebinds everything from the latest data. Safe to call as often as needed. */
@@ -760,6 +787,9 @@ class BluenixxDynamicBarController @Inject constructor(
             refreshProgress()
         }
 
+        private fun icon(kind: ExpressiveIcon, sizeDp: Int): Drawable =
+            BluenixxExpressiveIconDrawable(kind, dp(sizeDp))
+
         private fun bindControls(media: MediaData) {
             val actions = media.semanticActions
             val playing = media.isPlaying == true
@@ -769,7 +799,7 @@ class BluenixxDynamicBarController @Inject constructor(
                 actions?.custom0?.icon,
                 actions?.custom0?.action,
                 actions?.custom0?.contentDescription,
-                0,
+                null,
                 null,
             )
             bindSlot(
@@ -777,23 +807,25 @@ class BluenixxDynamicBarController @Inject constructor(
                 actions?.prevOrCustom?.icon,
                 actions?.prevOrCustom?.action,
                 actions?.prevOrCustom?.contentDescription,
-                android.R.drawable.ic_media_previous,
+                icon(ExpressiveIcon.PREVIOUS, SIDE_ICON_DP),
                 DESC_PREVIOUS,
             )
+            // Play/pause always uses our own icon so the shape morph and the icon stay in sync.
             bindSlot(
                 slots[2],
                 actions?.playOrPause?.icon,
                 actions?.playOrPause?.action,
                 actions?.playOrPause?.contentDescription,
-                if (playing) android.R.drawable.ic_media_pause else android.R.drawable.ic_media_play,
+                icon(if (playing) ExpressiveIcon.PAUSE else ExpressiveIcon.PLAY, PLAY_ICON_DP),
                 if (playing) DESC_PAUSE else DESC_PLAY,
+                preferFallback = true,
             )
             bindSlot(
                 slots[3],
                 actions?.nextOrCustom?.icon,
                 actions?.nextOrCustom?.action,
                 actions?.nextOrCustom?.contentDescription,
-                android.R.drawable.ic_media_next,
+                icon(ExpressiveIcon.NEXT, SIDE_ICON_DP),
                 DESC_NEXT,
             )
             val hasCustom1 = bindSlot(
@@ -801,9 +833,14 @@ class BluenixxDynamicBarController @Inject constructor(
                 actions?.custom1?.icon,
                 actions?.custom1?.action,
                 actions?.custom1?.contentDescription,
-                0,
+                null,
                 null,
             )
+
+            shapes[2].setRest(
+                dp(if (playing) PLAY_RADIUS_PLAYING_DP else PLAY_RADIUS_PAUSED_DP).toFloat()
+            )
+            seekBar.setPlaying(playing)
 
             // Keep the 3 main buttons centered: reserve space if only one side has a custom action.
             slots[0].visibility = when {
@@ -824,11 +861,15 @@ class BluenixxDynamicBarController @Inject constructor(
             icon: Drawable?,
             action: Runnable?,
             description: CharSequence?,
-            fallbackIconRes: Int,
+            fallbackIcon: Drawable?,
             fallbackDescription: CharSequence?,
+            preferFallback: Boolean = false,
         ): Boolean {
-            val drawable = icon?.let { independentCopy(it) }
-                ?: if (fallbackIconRes != 0) context.getDrawable(fallbackIconRes)?.mutate() else null
+            val drawable = if (preferFallback) {
+                fallbackIcon
+            } else {
+                icon?.let { independentCopy(it) } ?: fallbackIcon
+            }
 
             slot.setImageDrawable(drawable)
             slot.contentDescription = description.orNullIfBlank() ?: fallbackDescription
@@ -911,15 +952,24 @@ class BluenixxDynamicBarController @Inject constructor(
         const val KEY_ENABLED = "bluenixx_dynamic_bar_enabled"
         const val KEY_MEDIA = "bluenixx_dynamic_bar_media"
 
-        const val TINT_FACTOR = 0.42f
         const val PROGRESS_MAX = 10_000
-        const val TICK_MS = 500L
+        const val TICK_MS = 250L
         const val SEEK_HOLD_MS = 1_000L
         const val COLOR_ANIM_MS = 300L
         const val SHOW_MS = 220L
         const val HIDE_MS = 160L
         const val HIDDEN_SCALE = 0.88f
         const val DISABLED_ALPHA = 0.35f
+
+        const val TONAL_ALPHA = 0x3D
+        const val PLAY_ICON_DP = 30
+        const val SIDE_ICON_DP = 26
+        const val PLAY_RADIUS_PLAYING_DP = 28
+        const val PLAY_RADIUS_PAUSED_DP = 18
+        val SLOT_HEIGHT_DP = intArrayOf(44, 52, 56, 52, 44)
+        val SLOT_WEIGHT = floatArrayOf(0.8f, 1.1f, 1.4f, 1.1f, 0.8f)
+        val SLOT_RADIUS_DP = intArrayOf(22, 26, 18, 26, 22)
+        val SLOT_PRESSED_RADIUS_DP = intArrayOf(14, 16, 12, 16, 14)
 
         const val PANEL_WIDTH_DP = 340
         const val PANEL_SIDE_MARGIN_DP = 16
@@ -936,8 +986,6 @@ class BluenixxDynamicBarController @Inject constructor(
 
         val DEFAULT_COLOR: Int = Color.rgb(36, 36, 40)
         val SECONDARY_TEXT: Int = Color.argb(179, 255, 255, 255)
-        val TRACK_COLOR: Int = Color.argb(77, 255, 255, 255)
         val COVER_PLACEHOLDER: Int = Color.argb(40, 255, 255, 255)
-        val PLAY_BACKGROUND: Int = Color.argb(46, 255, 255, 255)
     }
 }
