@@ -278,14 +278,14 @@ constructor(
                             context.getDrawable(R.drawable.ic_media_play_button),
                             { executeAction(packageName, token, Player.COMMAND_PLAY_PAUSE) },
                             context.getString(R.string.controls_media_button_play),
-                            null,
+                            context.getDrawable(R.drawable.ic_media_play_button_container),
                         )
                     } else {
                         MediaAction(
                             context.getDrawable(R.drawable.ic_media_pause_button),
                             { executeAction(packageName, token, Player.COMMAND_PLAY_PAUSE) },
                             context.getString(R.string.controls_media_button_pause),
-                            null,
+                            context.getDrawable(R.drawable.ic_media_pause_button_container),
                         )
                     }
                 }
