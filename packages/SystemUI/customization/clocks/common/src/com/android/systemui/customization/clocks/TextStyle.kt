@@ -33,7 +33,7 @@ interface FontTextStyle : TextStyle {
 
 data class FontTextStyleImpl(
     override val lineHeight: Float? = null,
-    override val fontSizeScale: Float = 1f,
+    override val fontSizeScale: Float = 2f,
     override val fontFeatureSettings: String = "",
     override val transitionDuration: Long = TextAnimator.DEFAULT_ANIMATION_DURATION,
     override val transitionInterpolator: Interpolator? = null,

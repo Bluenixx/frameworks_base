@@ -19,7 +19,7 @@
     <dimen name="translation_per_sec">100dp</dimen>
     <dimen name="boost_dv">550dp</dimen>
     <dimen name="player_hit_size">40dp</dimen>
-    <dimen name="player_size">40dp</dimen>
+    <dimen name="player_size">30dp</dimen>
     <dimen name="obstacle_width">130dp</dimen>
     <dimen name="obstacle_stem_width">8dp</dimen>
     <dimen name="obstacle_gap">140dp</dimen>
@@ -27,7 +27,7 @@
     <dimen name="building_width_min">50dp</dimen>
     <dimen name="building_width_max">250dp</dimen>
     <dimen name="building_height_min">20dp</dimen>
-    <dimen name="cloud_size_min">10dp</dimen>
+    <dimen name="cloud_size_min">20dp</dimen>
     <dimen name="cloud_size_max">100dp</dimen>
     <dimen name="sun_size">45dp</dimen>
     <dimen name="star_size_min">3dp</dimen>

@@ -352,7 +352,7 @@
     <dimen name="notification_min_interaction_height">40dp</dimen>
 
     <!-- Radius for notifications corners without adjacent notifications -->
-    <dimen name="notification_corner_radius">28dp</dimen>
+    <dimen name="notification_corner_radius">32dp</dimen>
 
     <!-- Stroke width for notifications focus state overlay, see id/notification_focus_outline -->
     <dimen name="notification_focus_stroke_width">3dp</dimen>
@@ -361,7 +361,7 @@
     <dimen name="notification_corner_animation_distance">48dp</dimen>
 
     <!-- Radius for notifications corners with adjacent notifications -->
-    <dimen name="notification_corner_radius_small">4dp</dimen>
+    <dimen name="notification_corner_radius_small">6dp</dimen>
 
     <!-- the padding of the shelf icon container -->
     <dimen name="shelf_icon_container_padding">13dp</dimen>
@@ -430,7 +430,7 @@
     <dimen name="notification_importance_button_text">14sp</dimen>
     <dimen name="notification_importance_button_padding">16dp</dimen>
     <dimen name="notification_importance_button_description_top_margin">12dp</dimen>
-    <dimen name="rect_button_radius">8dp</dimen>
+    <dimen name="rect_button_radius">12dp</dimen>
 
     <!-- Padding for importance selection buttons in notification info, 2025 redesign version -->
     <dimen name="notification_2025_importance_button_padding_vertical">12dp</dimen>
@@ -494,7 +494,7 @@
     <!-- Constrained size of the floating overlay preview -->
     <dimen name="overlay_x_scale">80dp</dimen>
     <!-- Radius of the chip background on floating overlay actions -->
-    <dimen name="overlay_button_corner_radius">16dp</dimen>
+    <dimen name="overlay_button_corner_radius">20dp</dimen>
     <!-- Margin between successive chips -->
     <dimen name="overlay_action_chip_margin_start">8dp</dimen>
     <dimen name="shelf_action_chip_margin_start">12dp</dimen>
@@ -520,7 +520,7 @@
     <!-- Keep in sync with overlay_action_container_minimum_edge_spacing -->
     <dimen name="negative_overlay_action_container_minimum_edge_spacing">-12dp</dimen>
     <dimen name="overlay_bg_protection_height">242dp</dimen>
-    <dimen name="overlay_action_container_corner_radius">20dp</dimen>
+    <dimen name="overlay_action_container_corner_radius">24dp</dimen>
     <dimen name="overlay_action_container_padding_vertical">8dp</dimen>
     <dimen name="overlay_action_container_padding_right">8dp</dimen>
     <dimen name="overlay_action_container_padding_end">8dp</dimen>
@@ -640,7 +640,7 @@
 
     <dimen name="volume_dialog_slider_width_legacy">42dp</dimen>
 
-    <dimen name="volume_dialog_slider_corner_radius">21dp</dimen>
+    <dimen name="volume_dialog_slider_corner_radius">28dp</dimen>
 
     <!-- (volume_dialog_panel_width - rounded_slider_icon_size) / 2 -->
     <dimen name="volume_slider_icon_inset">11dp</dimen>
@@ -663,13 +663,13 @@
 
     <dimen name="volume_dialog_elevation">9dp</dimen>
 
-    <dimen name="volume_dialog_background_blur_radius">0dp</dimen>
+    <dimen name="volume_dialog_background_blur_radius">20dp</dimen>
 
     <dimen name="volume_tool_tip_right_margin">76dp</dimen>
 
     <dimen name="volume_tool_tip_arrow_corner_radius">2dp</dimen>
 
-    <dimen name="bottom_sheet_corner_radius">28dp</dimen>
+    <dimen name="bottom_sheet_corner_radius">32dp</dimen>
 
     <!-- Size of each item in the ringer selector drawer. -->
     <dimen name="volume_ringer_drawer_item_size">42dp</dimen>
@@ -702,10 +702,10 @@
     <!-- The size of the gesture span needed to activate the "pull" notification expansion -->
     <dimen name="pull_span_min">25dp</dimen>
 
-    <dimen name="qs_corner_radius">28dp</dimen>
-    <dimen name="qs_tile_margin_horizontal">8dp</dimen>
+    <dimen name="qs_corner_radius">40dp</dimen>
+    <dimen name="qs_tile_margin_horizontal">12dp</dimen>
     <dimen name="qs_tile_margin_vertical">@dimen/qs_tile_margin_horizontal</dimen>
-    <dimen name="qs_brightness_margin_top">8dp</dimen>
+    <dimen name="qs_brightness_margin_top">10dp</dimen>
     <dimen name="brightness_dialog_expanded_width">364dp</dimen>
     <dimen name="brightness_dialog_margin_end">24dp</dimen>
     <dimen name="brightness_dialog_margin_top">0dp</dimen>
@@ -730,14 +730,14 @@
          Scaled @dimen/qs_page_indicator-width by .4f.
     -->
     <dimen name="qs_page_indicator_dot_width">6.4dp</dimen>
-    <dimen name="qs_tile_text_size">14sp</dimen>
-    <dimen name="qs_panel_padding">16dp</dimen>
-    <dimen name="qs_panel_padding_top">80dp</dimen>
+    <dimen name="qs_tile_text_size">12sp</dimen>
+    <dimen name="qs_panel_padding">19dp</dimen>
+    <dimen name="qs_panel_padding_top">85dp</dimen>
 
     <!-- Size is in sp because the icon is inlined in text -->
-    <dimen name="qs_edit_mode_app_icon">14sp</dimen>
+    <dimen name="qs_edit_mode_app_icon">16sp</dimen>
 
-    <dimen name="qs_data_usage_text_size">14sp</dimen>
+    <dimen name="qs_data_usage_text_size">12sp</dimen>
     <dimen name="qs_data_usage_usage_text_size">36sp</dimen>
 
     <dimen name="qs_header_mobile_icon_size">@dimen/status_bar_icon_drawing_size</dimen>
@@ -752,7 +752,7 @@
     <dimen name="qs_footer_padding">20dp</dimen>
 
     <dimen name="segmented_button_spacing">0dp</dimen>
-    <dimen name="borderless_button_radius">2dp</dimen>
+    <dimen name="borderless_button_radius">4dp</dimen>
 
     <dimen name="restricted_padlock_pading">4dp</dimen>
 
@@ -878,7 +878,7 @@
     <!-- The amount to translate lockscreen elements on the GONE->AOD transition, on device fold -->
     <dimen name="keyguard_enter_from_side_translation_x">-100dp</dimen>
 
-    <dimen name="notification_scrim_corner_radius">32dp</dimen>
+    <dimen name="notification_scrim_corner_radius">40dp</dimen>
 
     <!-- The minimum amount the user needs to swipe to go to the camera / phone. -->
     <dimen name="keyguard_min_swipe_amount">110dp</dimen>
@@ -949,10 +949,10 @@
     <dimen name="go_to_full_shade_appearing_translation">200dp</dimen>
 
     <!-- The width/height of the keyguard bottom area icon view on keyguard. -->
-    <dimen name="keyguard_affordance_fixed_height">48dp</dimen>
-    <dimen name="keyguard_affordance_fixed_width">48dp</dimen>
-    <dimen name="keyguard_affordance_fixed_radius">24dp</dimen>
-    <dimen name="keyguard_affordance_fixed_padding">12dp</dimen>
+    <dimen name="keyguard_affordance_fixed_height">56dp</dimen>
+    <dimen name="keyguard_affordance_fixed_width">56dp</dimen>
+    <dimen name="keyguard_affordance_fixed_radius">28dp</dimen>
+    <dimen name="keyguard_affordance_fixed_padding">14dp</dimen>
 
     <!--  The width/height/padding of the keyguard settings popup menu  -->
     <dimen name="keyguard_settings_popup_menu_icon_height">24dp</dimen>
@@ -1067,8 +1067,8 @@
     <dimen name="ksh_icon_scaled_size">18dp</dimen>
     <dimen name="ksh_key_view_padding_vertical">4dp</dimen>
     <dimen name="ksh_key_view_padding_horizontal">12dp</dimen>
-    <dimen name="ksh_button_corner_radius">12dp</dimen>
-    <dimen name="ksh_dialog_top_corner_radius">28dp</dimen>
+    <dimen name="ksh_button_corner_radius">16dp</dimen>
+    <dimen name="ksh_dialog_top_corner_radius">32dp</dimen>
     <dimen name="ksh_search_box_corner_radius">100dp</dimen>
     <dimen name="ksh_app_item_minimum_height">64dp</dimen>
     <dimen name="ksh_category_separator_margin">16dp</dimen>
@@ -1115,7 +1115,7 @@
     <!-- Power Menu Lite -->
     <dimen name="global_actions_button_size">96dp</dimen>
     <dimen name="global_actions_button_padding">38dp</dimen>
-    <dimen name="global_actions_corner_radius">28dp</dimen>
+    <dimen name="global_actions_corner_radius">32dp</dimen>
     <dimen name="global_actions_blur_radius">34dp</dimen>
     <dimen name="global_actions_lite_padding">24dp</dimen>
     <dimen name="global_actions_info_margin">32dp</dimen>
@@ -1194,7 +1194,7 @@
     <dimen name="biometric_dialog_fingerprint_icon_height">100dp</dimen>
     <dimen name="biometric_dialog_button_negative_max_width">160dp</dimen>
     <dimen name="biometric_dialog_button_positive_max_width">136dp</dimen>
-    <dimen name="biometric_dialog_corner_size">28dp</dimen>
+    <dimen name="biometric_dialog_corner_size">32dp</dimen>
     <dimen name="biometric_dialog_indicator_max_width">280dp</dimen>
     <!-- Y translation when showing/dismissing the dialog-->
     <dimen name="biometric_dialog_animation_translation_offset">350dp</dimen>
@@ -1236,7 +1236,7 @@
     <!-- Dimensions for biometric prompt custom content view. -->
     <dimen name="biometric_prompt_logo_size">32dp</dimen>
     <dimen name="biometric_prompt_logo_description_top_padding">8dp</dimen>
-    <dimen name="biometric_prompt_content_corner_radius">28dp</dimen>
+    <dimen name="biometric_prompt_content_corner_radius">32dp</dimen>
     <dimen name="biometric_prompt_content_padding_horizontal">24dp</dimen>
     <dimen name="biometric_prompt_content_padding_vertical">16dp</dimen>
     <dimen name="biometric_prompt_content_space_width_between_items">16dp</dimen>
@@ -1283,7 +1283,7 @@
 
     <!--  Blur radius on status bar window and power menu  -->
     <dimen name="min_window_blur_radius">1px</dimen>
-    <dimen name="max_window_blur_radius">23px</dimen>
+    <dimen name="max_window_blur_radius">30px</dimen>
 
     <!-- Blur radius of the Notification Shade content (notifications, footer, shelf) -->
     <dimen name="max_shade_content_blur_radius">@dimen/max_window_blur_radius</dimen>
@@ -1332,21 +1332,21 @@
     <dimen name="privacy_dialog_background_radius_small">4dp</dimen>
 
     <!-- Size of media cards in the QSPanel carousel -->
-    <dimen name="qs_media_padding">16dp</dimen>
-    <dimen name="qs_media_album_radius">14dp</dimen>
+    <dimen name="qs_media_padding">10dp</dimen>
+    <dimen name="qs_media_album_radius">24dp</dimen>
     <dimen name="qs_media_info_margin">12dp</dimen>
     <dimen name="qs_media_info_spacing">8dp</dimen>
     <dimen name="qs_media_icon_offset">4dp</dimen>
     <dimen name="qs_center_guideline_padding">10dp</dimen>
     <dimen name="qs_media_action_spacing">4dp</dimen>
-    <dimen name="qs_media_action_margin">12dp</dimen>
-    <dimen name="qs_media_action_play_pause_width">72dp</dimen>
+    <dimen name="qs_media_action_margin">15dp</dimen>
+    <dimen name="qs_media_action_play_pause_width">80dp</dimen>
     <dimen name="qs_seamless_height">24dp</dimen>
     <dimen name="qs_seamless_icon_size">12dp</dimen>
-    <dimen name="qs_media_button_stroke_width">1dp</dimen>
-    <dimen name="qs_media_disabled_seekbar_height">1dp</dimen>
+    <dimen name="qs_media_button_stroke_width">3dp</dimen>
+    <dimen name="qs_media_disabled_seekbar_height">3dp</dimen>
     <dimen name="qs_media_enabled_seekbar_height">2dp</dimen>
-    <dimen name="qs_media_app_icon_size">24dp</dimen>
+    <dimen name="qs_media_app_icon_size">29dp</dimen>
     <dimen name="qs_media_explicit_indicator_icon_size">13dp</dimen>
 
     <dimen name="qs_media_session_enabled_seekbar_vertical_padding">15dp</dimen>
@@ -1354,9 +1354,9 @@
     <dimen name="qs_media_session_height_expanded">208dp</dimen>
     <dimen name="qs_media_session_height_collapsed">128dp</dimen>
     <dimen name="qs_media_seekbar_progress_wavelength">20dp</dimen>
-    <dimen name="qs_media_seekbar_progress_amplitude">1.5dp</dimen>
-    <dimen name="qs_media_seekbar_progress_phase">8dp</dimen>
-    <dimen name="qs_media_seekbar_progress_stroke_width">2dp</dimen>
+    <dimen name="qs_media_seekbar_progress_amplitude">3.0dp</dimen>
+    <dimen name="qs_media_seekbar_progress_phase">12dp</dimen>
+    <dimen name="qs_media_seekbar_progress_stroke_width">5dp</dimen>
     <dimen name="qs_media_session_collapsed_guideline">168dp</dimen>
     <dimen name="qs_media_session_collapsed_guideline_with_arrows">216dp</dimen>
 
@@ -1475,7 +1475,7 @@
     <dimen name="control_list_divider">1dp</dimen>
     <dimen name="control_list_vertical_spacing">8dp</dimen>
     <dimen name="control_list_horizontal_spacing">12dp</dimen>
-    <dimen name="control_corner_radius">14dp</dimen>
+    <dimen name="control_corner_radius">20dp</dimen>
     <dimen name="control_height">104dp</dimen>
     <dimen name="control_padding">12dp</dimen>
     <dimen name="control_padding_adjustment">4dp</dimen>
@@ -1571,11 +1571,11 @@
     <dimen name="media_output_dialog_list_max_height">355dp</dimen>
     <dimen name="media_output_dialog_header_album_icon_size">72dp</dimen>
     <dimen name="media_output_dialog_header_icon_padding">16dp</dimen>
-    <dimen name="media_output_dialog_icon_corner_radius">16dp</dimen>
+    <dimen name="media_output_dialog_icon_corner_radius">20dp</dimen>
     <dimen name="media_output_dialog_margin_horizontal">16dp</dimen>
     <dimen name="media_output_dialog_app_icon_size">16dp</dimen>
     <dimen name="media_output_dialog_app_icon_bottom_margin">11dp</dimen>
-    <dimen name="media_output_dialog_corner_radius">20dp</dimen>
+    <dimen name="media_output_dialog_corner_radius">28dp</dimen>
     <dimen name="media_output_dialog_button_gap">8dp</dimen>
     <dimen name="media_output_item_content_vertical_margin">4dp</dimen>
     <dimen name="media_output_item_content_vertical_margin_active">0dp</dimen>
@@ -1624,7 +1624,7 @@
 
     <!-- The fraction at which the QS "squish" transition should start during the lockscreen shade
          expansion. 0 is fully collapsed, 1 is fully expanded. -->
-    <item type="dimen" format="float" name="lockscreen_shade_qs_squish_start_fraction">0.5</item>
+    <item type="dimen" format="float" name="lockscreen_shade_qs_squish_start_fraction">1.0</item>
 
     <!-- Distance that the full shade transition takes in order for depth of the wallpaper to fully
          change.  -->
@@ -1824,7 +1824,7 @@
     <dimen name="card_carousel_dot_margin">4dp</dimen>
     <dimen name="min_wallet_empty_height">208dp</dimen>
     <dimen name="wallet_card_border_width">1dp</dimen>
-    <dimen name="wallet_empty_state_corner_radius">24dp</dimen>
+    <dimen name="wallet_empty_state_corner_radius">28dp</dimen>
     <dimen name="wallet_tile_card_view_height">32dp</dimen>
     <dimen name="wallet_tile_card_view_width">50dp</dimen>
     <dimen name="wallet_button_horizontal_padding">24dp</dimen>
@@ -1875,7 +1875,7 @@
     <dimen name="signal_strength_icon_size">24dp</dimen>
 
     <!-- Internet dialog related dimensions -->
-    <dimen name="internet_dialog_corner_radius">24dp</dimen>
+    <dimen name="internet_dialog_corner_radius">28dp</dimen>
     <!-- Width of progress bar -->
     <dimen name="internet_dialog_progress_bar_width">152dp</dimen>
     <!-- End margin of network layout -->
@@ -1976,7 +1976,7 @@
 
     <!-- Dream overlay complications related dimensions -->
     <!-- The blur radius applied to the dream overlay when entering and exiting dreams -->
-    <dimen name="dream_overlay_anim_blur_radius">50dp</dimen>
+    <dimen name="dream_overlay_anim_blur_radius">70dp</dimen>
     <dimen name="dream_overlay_bottom_affordance_height">64dp</dimen>
     <dimen name="dream_overlay_bottom_affordance_width">64dp</dimen>
     <dimen name="dream_overlay_bottom_affordance_radius">32dp</dimen>
@@ -2174,14 +2174,14 @@
 
     <!-- Volume start -->
     <dimen name="volume_dialog_window_width">176dp</dimen>
-    <dimen name="volume_dialog_width">60dp</dimen>
+    <dimen name="volume_dialog_width">64dp</dimen>
 
-    <dimen name="volume_dialog_background_corner_radius">30dp</dimen>
+    <dimen name="volume_dialog_background_corner_radius">60dp</dimen>
     <!-- top margin covers half the ringer button + components spacing -->
     <dimen name="volume_dialog_background_top_margin">-28dp</dimen>
     <dimen name="volume_dialog_background_margin">6dp</dimen>
     <dimen name="volume_dialog_background_margin_negative">-6dp</dimen>
-    <dimen name="volume_dialog_background_surface_blur_radius">23dp</dimen>
+    <dimen name="volume_dialog_background_surface_blur_radius">30dp</dimen>
 
     <dimen name="volume_dialog_window_margin">12dp</dimen>
     <dimen name="volume_dialog_horizontal_window_margin">52dp</dimen>
@@ -2193,11 +2193,11 @@
     <dimen name="volume_dialog_floating_sliders_horizontal_padding">4dp</dimen>
     <dimen name="volume_dialog_floating_sliders_vertical_padding">10dp</dimen>
     <dimen name="volume_dialog_button_size">48dp</dimen>
-    <dimen name="volume_dialog_slider_width">52dp</dimen>
+    <dimen name="volume_dialog_slider_width">56dp</dimen>
     <dimen name="volume_dialog_slider_height">254dp</dimen>
 
     <dimen name="volume_dialog_horizontal_height">56dp</dimen>
-    <dimen name="volume_dialog_horizontal_background_corner_radius">28dp</dimen>
+    <dimen name="volume_dialog_horizontal_background_corner_radius">30dp</dimen>
     <dimen name="volume_dialog_horizontal_background_margin_negative">-4dp</dimen>
     <dimen name="volume_dialog_horizontal_background_top_margin">-12dp</dimen>
     <dimen name="volume_dialog_horizontal_slider_container_height">32dp</dimen>
@@ -2213,13 +2213,13 @@
     <dimen name="volume_dialog_slider_horizontal_margin_with_captions_toggle">124dp</dimen>
     <dimen name="volume_dialog_half_opened_offset">-128dp</dimen>
     <dimen name="volume_dialog_slider_max_deviation">56dp</dimen>
-    <dimen name="volume_dialog_floating_slider_background_corner_radius">20dp</dimen>
+    <dimen name="volume_dialog_floating_slider_background_corner_radius">28dp</dimen>
 
-    <dimen name="volume_dialog_background_square_corner_radius">12dp</dimen>
+    <dimen name="volume_dialog_background_square_corner_radius">16dp</dimen>
 
     <dimen name="volume_dialog_ringer_drawer_button_size">@dimen/volume_dialog_button_size</dimen>
     <dimen name="volume_dialog_ringer_drawer_button_icon_radius">10dp</dimen>
-    <dimen name="volume_dialog_ringer_selected_button_background_radius">20dp</dimen>
+    <dimen name="volume_dialog_ringer_selected_button_background_radius">24dp</dimen>
 
     <dimen name="volume_panel_slice_vertical_padding">8dp</dimen>
     <dimen name="volume_panel_slice_horizontal_padding">24dp</dimen>
@@ -2265,14 +2265,14 @@
     <!-- Tile Details entry start -->
     <dimen name="tile_details_entry_gap">2dp</dimen>
     <dimen name="tile_details_entry_horizontal_gap">6dp</dimen>
-    <dimen name="tile_details_entry_height">72dp</dimen>
+    <dimen name="tile_details_entry_height">80dp</dimen>
     <dimen name="tile_details_entry_horizontal_margin">16dp</dimen>
     <dimen name="tile_details_entry_icon_size">24dp</dimen>
     <dimen name="tile_details_entry_start_padding">20dp</dimen>
     <!-- tile_details_entry_subtitle_bottom_paddings used only when both the title and the subtitle exist -->
     <dimen name="tile_details_entry_subtitle_bottom_paddings">@dimen/tile_details_entry_title_top_paddings</dimen>
-    <dimen name="tile_details_entry_subtitle_size">12sp</dimen>
-    <dimen name="tile_details_entry_title_size">13sp</dimen>
+    <dimen name="tile_details_entry_subtitle_size">14sp</dimen>
+    <dimen name="tile_details_entry_title_size">16sp</dimen>
     <!-- tile_details_entry_title_top_paddings used only when both the title and the subtitle exist -->
     <dimen name="tile_details_entry_title_top_paddings">15dp</dimen>
     <!-- Spacing between end icons -->
@@ -2288,9 +2288,9 @@
     <!-- Bouncer containerization on large screens end -->
 
     <!-- Lockscreen blur values -->
-    <dimen name="keyguard_shortcuts_blur_radius">15dp</dimen>
-    <dimen name="fingerprint_icon_blur_radius">15dp</dimen>
-    <dimen name="notification_background_blur_radius">25dp</dimen>
+    <dimen name="keyguard_shortcuts_blur_radius">20dp</dimen>
+    <dimen name="fingerprint_icon_blur_radius">20dp</dimen>
+    <dimen name="notification_background_blur_radius">30dp</dimen>
     <!-- Lockscreen blur values end -->
 
     <!-- Usb Device Dialog values -->

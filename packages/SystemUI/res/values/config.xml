@@ -727,7 +727,7 @@
     <bool name="config_playHomeSoundAfterAssistant">false</bool>
 
     <!-- Whether to use window background blur for the volume dialog. -->
-    <bool name="config_volumeDialogUseBackgroundBlur">false</bool>
+    <bool name="config_volumeDialogUseBackgroundBlur">true</bool>
 
     <!-- The properties of the face auth front camera for outer display in pixels -->
     <integer-array name="config_face_auth_props">
@@ -1175,7 +1175,7 @@
     <bool name="config_minmode_enabled">false</bool>
 
     <!-- Indicates post recording flow to use flat bottom bar to save vertical space -->
-    <bool name="screen_record_post_recording_flat_bottom_bar">false</bool>
+    <bool name="screen_record_post_recording_flat_bottom_bar">true</bool>
 
     <!--
     Whether to enable use brightness mirror in the QuickSettings shade overlay.

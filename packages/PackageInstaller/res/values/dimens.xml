@@ -48,11 +48,11 @@
     <dimen name="app_snippet_layout_vertical_margin">16dp</dimen>
     <dimen name="app_label_padding">18dp</dimen>
     <dimen name="dialog_inter_element_margin">16dp</dimen>
-    <dimen name="indeterminate_progress_bar_padding">26dp</dimen>
+    <dimen name="indeterminate_progress_bar_padding">22dp</dimen>
     <dimen name="alert_dialog_inner_padding">24dp</dimen>
     <dimen name="button_min_height">48dp</dimen>
     <dimen name="dialog_inter_element_vertical_margin">12dp</dimen>
-    <dimen name="alert_dialog_radius">28dp</dimen>
+    <dimen name="alert_dialog_radius">33dp</dimen>
     <dimen name="alert_dialog_dim_amount">0.6</dimen>
     <dimen name="progress_bar_margin_top">32dp</dimen>
     <!-- 364dp for the portrait mode -->

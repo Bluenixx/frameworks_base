@@ -51,7 +51,7 @@
     </style>
 
     <style name="ShapeAppearance.PackageInstaller.Glass" parent="">
-        <item name="cornerSize">28dp</item>
+        <item name="cornerSize">30dp</item>
     </style>
 
     <style name="Theme.UninstallerActivity"
