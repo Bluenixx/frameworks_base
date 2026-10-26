@@ -327,8 +327,8 @@
     <dimen name="notification_actions_icon_drawable_size">20dp</dimen>
 
     <!-- The corner radius if the emphasized action buttons in a notification -->
-    <dimen name="notification_action_button_radius" android:featureFlag="!android.app.api_notification_action_custom">18dp</dimen>
-    <dimen name="notification_action_button_radius" android:featureFlag="android.app.api_notification_action_custom">20dp</dimen>
+    <dimen name="notification_action_button_radius" android:featureFlag="!android.app.api_notification_action_custom">24dp</dimen>
+    <dimen name="notification_action_button_radius" android:featureFlag="android.app.api_notification_action_custom">24dp</dimen>
 
     <!-- Size of the stroke with for the emphasized notification button style -->
     <dimen name="emphasized_button_stroke_width">1dp</dimen>
@@ -880,7 +880,7 @@
     <!-- Top/bottom padding of the tooltip text. -->
     <dimen name="tooltip_vertical_padding">6.5dp</dimen>
     <!-- Border corner radius of the tooltip window. -->
-    <dimen name="tooltip_corner_radius">2dp</dimen>
+    <dimen name="tooltip_corner_radius">8dp</dimen>
     <!-- View with the height equal or above this threshold will have a tooltip anchored
     to the mouse/touch position -->
     <dimen name="tooltip_precise_anchor_threshold">96dp</dimen>
@@ -999,7 +999,7 @@
     <dimen name="autofill_save_title_start_padding">8dp</dimen>
     <dimen name="autofill_save_scroll_view_top_margin">16dp</dimen>
     <dimen name="autofill_save_button_bar_padding">16dp</dimen>
-    <dimen name="autofill_dialog_corner_radius">24dp</dimen>
+    <dimen name="autofill_dialog_corner_radius">28dp</dimen>
     <dimen name="autofill_button_bar_spacer_width">12dp</dimen>
     <dimen name="autofill_button_bar_spacer_height">4dp</dimen>
 
@@ -1064,7 +1064,7 @@
 
     <!-- chooser/resolver (sharesheet) spacing -->
     <dimen name="chooser_width">412dp</dimen>
-    <dimen name="chooser_corner_radius">28dp</dimen>
+    <dimen name="chooser_corner_radius">32dp</dimen>
     <dimen name="chooser_row_text_option_translate">25dp</dimen>
     <dimen name="chooser_view_spacing">18dp</dimen>
     <dimen name="chooser_edge_margin_thin">16dp</dimen>
@@ -1112,12 +1112,12 @@
     <dimen name="controls_thumbnail_image_max_width">280dp</dimen>
 
     <!-- System-provided radius for the background view of app widgets. The resolved value of this resource may change at runtime. -->
-    <dimen name="system_app_widget_background_radius" android:featureFlag="!android.appwidget.flags.use_smaller_app_widget_system_radius">28dp</dimen>
-    <dimen name="system_app_widget_background_radius" android:featureFlag="android.appwidget.flags.use_smaller_app_widget_system_radius">24dp</dimen>
+    <dimen name="system_app_widget_background_radius" android:featureFlag="!android.appwidget.flags.use_smaller_app_widget_system_radius">32dp</dimen>
+    <dimen name="system_app_widget_background_radius" android:featureFlag="android.appwidget.flags.use_smaller_app_widget_system_radius">28dp</dimen>
     <!-- System-provided radius for inner views on app widgets that are positioned 8dp within the widget background view. The resolved value of this resource may change at runtime. -->
-    <dimen name="system_app_widget_inner_radius" android:featureFlag="!android.appwidget.flags.use_smaller_app_widget_system_radius">20dp</dimen>
+    <dimen name="system_app_widget_inner_radius" android:featureFlag="!android.appwidget.flags.use_smaller_app_widget_system_radius">24dp</dimen>
     <!-- System-provided radius for inner views on app widgets that are positioned 8dp within the widget background view. The resolved value of this resource may change at runtime. -->
-    <dimen name="system_app_widget_inner_radius" android:featureFlag="android.appwidget.flags.use_smaller_app_widget_system_radius">16dp</dimen>
+    <dimen name="system_app_widget_inner_radius" android:featureFlag="android.appwidget.flags.use_smaller_app_widget_system_radius">20dp</dimen>
     <!-- System-provided padding for inner views on app widgets. The resolved value of this resource may change at runtime. @removed -->
     <dimen name="__removed_system_app_widget_internal_padding">16dp</dimen>
 
